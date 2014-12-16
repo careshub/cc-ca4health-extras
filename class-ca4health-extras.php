@@ -107,6 +107,7 @@ class CC_CA4Health_Extras {
 		// Add a meta box to the group's "admin>settings" tab.
    		// We're also using BP_Group_Extension's admin_screen method to add this meta box to the WP-admin group edit
         add_action( 'cc_group_home_page_after_content', array( $this, 'insert_google_calendar' ) );
+        add_filter( 'group_reports_create_new_label', array( $this, 'change_group_create_report_label' ), 2, 11 );
 
 
 	}
@@ -349,7 +350,19 @@ class CC_CA4Health_Extras {
 
 		echo '<iframe src="https://www.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=4m1j42139um8lvhovgb1nkf0ds%40group.calendar.google.com&amp;color=%23B1440E&amp;src=cacti.phi%40gmail.com&amp;color=%232952A3&amp;src=en.usa%23holiday%40group.v.calendar.google.com&amp;color=%232F6309&amp;ctz=America%2FLos_Angeles" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>';
 
-
 	}
 
+	/**
+	 * Changes the label of the "Create New Report" button on the CA4Health page, since it will go to a different report
+	 *
+	 * @since    0.1.0
+	 */
+	public function change_group_create_report_label( $label, $group_id ) {
+
+		if ( ! in_array( $group_id, $this->ca4health_all_group_ids ) )
+			return $label; 
+
+		return 'Create a CA4Health Report';
+
+	}
 }
