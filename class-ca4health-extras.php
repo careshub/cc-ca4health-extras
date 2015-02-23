@@ -107,7 +107,7 @@ class CC_CA4Health_Extras {
 		// Add a meta box to the group's "admin>settings" tab.
    		// We're also using BP_Group_Extension's admin_screen method to add this meta box to the WP-admin group edit
         add_action( 'cc_group_home_page_after_content', array( $this, 'insert_google_calendar' ) );
-        add_filter( 'group_reports_create_new_label', array( $this, 'change_group_create_report_label' ), 2, 11 );
+        add_filter( 'group_reports_create_new_label', array( $this, 'change_group_create_report_label' ), 31, 2 );
 
 
 	}
@@ -359,10 +359,10 @@ class CC_CA4Health_Extras {
 	 */
 	public function change_group_create_report_label( $label, $group_id ) {
 
-		if ( ! in_array( $group_id, $this->ca4health_all_group_ids ) )
-			return $label; 
-
-		return 'Create a CA4Health Report';
-
+		if ( in_array( $group_id, $this->ca4health_all_group_ids ) ) {
+			$label = 'Create a CA4Health Report';
+		}
+		
+		return $label; 
 	}
 }
